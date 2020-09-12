@@ -123,7 +123,18 @@
               "devServerTarget": "live-messenger:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "baseHref": "https://anuragarwalkar.github.io/chat-buddy/",
+            "repo": "https://github.com/anuragarwalkar/chat-buddy.git",
+            "name": "Anurag Arwalkar",
+            "email": "anuragarwalkar@gmail.com",
+            "noSilent": true
+          }
         }
+      }
       }
     }
   },
