@@ -1,18 +1,29 @@
-.login {
+.auth {
     display: flex;
+    flex-flow: column;
     justify-content: center;
-    margin: 100px 0px;
+    max-width: 380px;
+    width: 80%;
+    height: 80%;
+    margin: auto;
 
-    &__container {
+    &__sign-up__container {
+        height: 22rem;
+
         &__content--button {
             display: flex;
             justify-content: center;
         }
     }
 
+    &__sign-in__container {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+    }
+
     .mat-form-field {
         width: 100%;
-        min-width: 300px;
     }
 
     mat-card-title,

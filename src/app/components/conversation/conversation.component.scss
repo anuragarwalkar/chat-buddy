@@ -1,0 +1,14 @@
+.conversation {
+    display: flex;
+    height: 90%;
+
+    &__users {
+        width: 25%;
+        background-color: red;
+    }
+
+    &__main {
+        width: 75%;
+        background-color: blue;
+    }
+}

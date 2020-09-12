@@ -1,0 +1,16 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 9%;
+    outline: none;
+    cursor: pointer;
+
+    div {
+        img {
+            vertical-align: middle;
+            width: 40px;
+            height: auto;
+        }
+    }
+}
