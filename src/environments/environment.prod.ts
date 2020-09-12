@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  origin: 'http://localhost:3000'
+  origin: 'https://chat-buddy-node.herokuapp.com/'
 };
