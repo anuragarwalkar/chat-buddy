@@ -34,7 +34,8 @@ export class ChatsComponent implements OnInit {
     const { fullName } = this.auth.getUserDetails;
     const time = moment().format('h:m a');
 
-    this.chatHistory.push({ isSender: true, fullName, createdAt: new Date(), message: this.message });
+    this.chatHistory.push({ isSender: true, fullName, createdAt: new Date(),
+      message: this.message });
 
     this.socket.sendMessage(this.message, this.recipientId);
 
@@ -61,7 +62,13 @@ export class ChatsComponent implements OnInit {
     if (this.chat.getRecipientUserDetails) {
       this.recipientUserDetails = this.chat.getRecipientUserDetails;
     } else {
-      this.recipientUserDetails = await this.chat.getUserDetails(this.recipientId).toPromise();
+      try {
+        if (!this.showNewChat) {
+        this.recipientUserDetails = await this.chat.getUserDetails(this.recipientId).toPromise();
+        }
+      } catch (error) {
+
+      }
     }
 
   }
