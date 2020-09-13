@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit {
   }
 
   onGoToProfile(userId: string): void {
-    this.router.navigate(['conversation', userId, 'profile'])
+    this.router.navigate(['conversation', userId, 'profile']);
   }
 
   ngOnInit(): void {

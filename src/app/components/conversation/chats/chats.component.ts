@@ -21,7 +21,7 @@ export class ChatsComponent implements OnInit {
     email: '',
     fullName: '',
     userId: ''
-  }
+  };
 
   constructor(public chat: ChatService,
               private socket: SocketService,
@@ -74,7 +74,7 @@ export class ChatsComponent implements OnInit {
     if (!this.showNewChat) {
       this.chat.getChatHistory(this.auth.userDetails.userId, this.recipientId).subscribe(res => {
           this.chatHistory = [...res];
-      })
+      });
     }
   }
 
