@@ -1,5 +1,5 @@
 <div class="auth">
-    <div class="auth__sign-up__container">
+    <div class="auth__sign-up__container" *ngIf="!showLoader; else spinner">
         <mat-card>
             <mat-card-title>{{ isSignUp ? "SIGN UP" : "SIGN IN" }}</mat-card-title>
             <mat-card-content>
@@ -30,8 +30,14 @@
             </mat-card-content>
         </mat-card>
     </div>
-    <div class="auth__sign-in__container" *ngIf="isSignUp">
+    <div class="auth__sign-in__container" *ngIf="isSignUp && !showLoader">
         <p>Already Have Account?</p>
         <button type="button" mat-raised-button color="primary" (click)="onSwitchScreen()">Sign In</button>
     </div>
+
+    <ng-template #spinner>
+        <div style="display: flex; justify-content: center;">
+            <mat-spinner></mat-spinner>
+        </div>
+    </ng-template>
 </div>

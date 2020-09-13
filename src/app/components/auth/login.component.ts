@@ -10,15 +10,28 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private auth: AuthService) { }
+  showLoader = false;
   isSignUp = true;
   form: FormGroup;
 
   submit(): void {
     if (this.form.valid) {
+      this.showLoader = true;
       if (this.isSignUp) {
-        this.auth.signUp(this.form.value).subscribe();
+        this.auth.signUp(this.form.value).subscribe((res) => {
+          this.showLoader = false;
+        }, err => {
+          this.showLoader = false;
+          console.error('err:', err);
+        }
+        );
       } else {
-        this.auth.signIn(this.form.value).subscribe();
+        this.auth.signIn(this.form.value).subscribe((res) => {
+          this.showLoader = false;
+        }, err => {
+          this.showLoader = false;
+          console.error('err:', err);
+        });
       }
     }
   }

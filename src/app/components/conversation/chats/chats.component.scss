@@ -1,0 +1,70 @@
+.chat {
+    display: flex;
+    height: 100%;
+    flex-flow: column;
+    justify-content: space-between;
+    padding: 10px 0 0 10px;
+
+    &__content {
+        height: 90%;
+        overflow: auto;
+    }
+
+    &__navigation {
+        &__mobile-nav {
+            display: none;
+        }
+    }
+
+    &__input {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+
+        &__left {
+            width: 85%;
+            &__form-field {
+                width: 100%;
+            }
+        }
+
+        &__right {
+            margin-left: 25px;
+            display: flex;
+            padding-bottom: 1.3rem;
+            justify-content: center;
+        }
+    }
+}
+
+.mat-icon {
+    width: auto;
+    height: auto;
+}
+
+@media screen and (max-width: 500px) {
+    .chat {
+        background-color: white;
+        padding: 10px;
+
+        &__navigation {
+            &__mobile-nav {
+                display: flex;
+                align-items: center;
+                border-bottom: 5px solid #F4F5FB;
+
+                &--text {
+                    margin-left: 5px;
+                }
+
+            }
+        }
+
+        &__input {
+            &__right {
+                margin-left: 10px;
+            }
+        }
+    }
+}

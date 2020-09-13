@@ -1,16 +1,27 @@
 .header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    width: 9%;
-    outline: none;
-    cursor: pointer;
+    width: 100%;
 
-    div {
+    &__left-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 9%;
+        outline: none;
+        cursor: pointer;
+
         img {
             vertical-align: middle;
             width: 40px;
             height: auto;
         }
     }
+
+    &__right-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
 }

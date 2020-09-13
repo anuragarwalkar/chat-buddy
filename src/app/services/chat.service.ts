@@ -1,33 +1,46 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import io from 'socket.io-client';
 import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
+import { User } from '../models/user.model';
+import { Observable } from 'rxjs';
+import { Chat } from '../models/chat.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-  private socket: io.Socket;
+  private _recipientUuserDetails: User;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  socketConnectionInit(token: string = null): void {
-    if (!token) {
-      token = sessionStorage.getItem('access_token');
-    }
-    const options = { query: { token } };
-    this.socket = io(environment.origin, options);
+  getUsers(userId: string): Observable<User[]> {
+    return this.http.get<{success: boolean, data: User[]}>(`${environment.origin}/api/v1/user/${userId}`)
+    .pipe(map((res: {success: boolean, data: User[]}) => {
+      return res.data;
+    }));
   }
 
-  sendMessage(msg: string): void {
-    this.socket.emit('', { message: msg });
+  getChatHistory(sender: string, recipient: string): Observable<Chat[]> {
+    return this.http.post<{success: boolean, data: Chat[]}>(`${environment.origin}/api/v1/chat/history`, {sender, recipient})
+    .pipe(map((res: {success: boolean, data: Chat[]}) => {
+      return res.data;
+    }));
   }
 
-  onNewMessage(): Observable<any> {
-    return new Observable(observer => {
-      this.socket.on('', msg => {
-        observer.next(msg);
-      });
-    });
+  setRecipientUserDetails(user: User): void {
+    this._recipientUuserDetails = user;
   }
+
+  get getRecipientUserDetails(): User {
+    return this._recipientUuserDetails;
+  }
+
+  getUserDetails(userId: string): Observable<User> {
+    return this.http.get<{success: boolean, data: User}>(`${environment.origin}/api/v1/user/single/${userId}`)
+    .pipe(map((res: {success: boolean, data: User}) => {
+      return res.data;
+    }));
+  }
+
 }

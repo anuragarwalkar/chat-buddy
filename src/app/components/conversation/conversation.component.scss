@@ -1,14 +1,30 @@
 .conversation {
     display: flex;
-    height: 90%;
+    height: 89%;
+    margin-top: 10px;
 
     &__users {
-        width: 25%;
-        background-color: red;
+        width: 29%;
+        margin-right: 2px;
     }
 
     &__main {
+        background-color: white;
         width: 75%;
-        background-color: blue;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .conversation {
+        margin-top: 6px;
+
+        &__users {
+            display: none;
+        }
+
+        &__main {
+            background-color: #F4F5FB;
+            width: 100%;
+        }
     }
 }

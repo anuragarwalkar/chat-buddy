@@ -5,22 +5,25 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AuthSignInModel, AuthSignUpModel } from '../models/auth.model';
-import { ChatService } from './chat.service';
+import jwt_decode from 'jwt-decode';
+import { SocketService } from './socket/socket.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
+  userDetails: { fullName: string; userId: string } = null;
 
-  constructor(private http: HttpClient, private chat: ChatService, private router: Router) { }
+  constructor(private http: HttpClient, private socket: SocketService, private router: Router) { }
 
   private mapCallback = (response: { success: boolean, data: any }): { success: boolean, data: any } => {
-    const { success, data: { token } } = response;
+    const { success, data: { token, user } } = response;
     if (success) {
+      this.setUserDetails(user);
       this.setAccessToken(token);
-      this.chat.socketConnectionInit(token);
-      this.router.navigate(['/conversation/chat']);
+      this.socket.socketConnectionInit(token, user.userId);
+      this.router.navigate(['/conversation/new/chat']);
     }
     return response;
   }
@@ -41,6 +44,32 @@ export class AuthService {
 
   private get getAccessToken(): string {
     return sessionStorage.getItem('access_token');
+  }
+
+  private setUserDetails(userDetails: {fullName: string, userId: string}): void {
+      this.userDetails = userDetails;
+  }
+
+  get getUserDetails(): any {
+    if (this.userDetails === null) {
+      try {
+        this.userDetails = jwt_decode(this.getAccessToken).user;
+        if (!this.socket.isSocketInit) {
+          this.socket.socketConnectionInit(this.getAccessToken, this.userDetails.userId);
+        }
+      } catch (error) {
+        this.userDetails = null;
+      }
+    }
+
+    return this.userDetails;
+  }
+
+  logout(): void {
+    this.userDetails = null;
+    sessionStorage.removeItem('access_token');
+    this.socket.endSocketConnection();
+    this.router.navigate(['/']);
   }
 
   canActivate(): boolean {
