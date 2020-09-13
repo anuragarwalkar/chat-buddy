@@ -1,0 +1,37 @@
+.chat-message {
+    display: flex;
+    margin-bottom: 0.8rem;
+    margin-right: 0.9rem;
+
+    &__user-icon {
+        background-color: #c5cee0;
+        margin-right: 10px;
+        text-align: center;
+        font-size: 1.4rem;
+        color: white;
+        line-height: 3rem;
+        width: 3rem;
+        border-radius: 50%;
+        height: 3rem;
+    }
+
+    &__main {
+        &--username {
+            color: #939fb6;
+        }
+
+        &--message {
+            border-radius: 0 10px 10px;
+            padding: 0.8rem;
+            color: white;
+            background-color: #3366ff;
+        }
+    }
+}
+
+.isSender {
+    border-radius: 10px 0 10px 10px;
+    padding: 0.8rem;
+    color: black;
+    background-color: #c5cee0;
+}

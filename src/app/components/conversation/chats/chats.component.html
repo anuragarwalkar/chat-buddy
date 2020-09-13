@@ -1,1 +1,43 @@
-<p>chats works!</p>
+<div class="chat">
+    <div class="chat__navigation" >
+        <div class="chat__navigation__mobile-nav" (click)="navigateToUsers()">
+            <mat-icon>west</mat-icon>
+            <div *ngIf="showNewChat; else userInfo" class="chat__navigation__mobile-nav--text">Go Back To All users</div>
+            <ng-template #userInfo>
+                <app-user style="width: 80%;" [user]="recipientUserDetails"></app-user>
+            </ng-template>
+        </div>
+    </div>
+    <ng-container *ngIf="!showNewChat; else empty">
+        <div class="chat__content" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+            <ng-container *ngIf="chatHistory.length > 0; else empty">
+                <div *ngFor="let message of chatHistory">
+                    <app-chat-message [isSender]="message.isSender" [fullName]="message.fullName" [date]="message.createdAt"
+                        [message]="message.message"></app-chat-message>
+                </div>
+            </ng-container>
+        </div>
+    
+        <div class="chat__input">
+            <div class="chat__input__left">
+                <mat-form-field class="chat__input__left__form-field" appearance="fill">
+                    <mat-label>Type a message</mat-label>
+                    <input matInput [(ngModel)]="message" (keyup.enter)="onSubmit()" placeholder="Type a message">
+                </mat-form-field>
+            </div>
+            <div class="chat__input__right">
+                <button mat-mini-fab color="primary" type="button" (click)="onSubmit()" aria-label="message send button">
+                    <mat-icon>send</mat-icon>
+                </button>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+<ng-template #empty>
+    <div class="absolute-center" style="font-size: 2rem;">
+        <mat-icon style="font-size: 3rem; color: #455CC7;">chat</mat-icon>
+        <div style="margin-left: 1rem; height: 2rem;">{{showNewChat ? 'Please Select a Chat.' : 'Start a conversation.'}}
+        </div>
+    </div>
+</ng-template>

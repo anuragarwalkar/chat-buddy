@@ -1,0 +1,13 @@
+<div class="chat-message" [ngStyle]="{'justify-content' : isSender ? 'flex-end' : 'flex-start'}">
+    <div class="chat-message__user-icon" *ngIf="!isSender">
+    {{fullName | customName}}
+    </div>
+    <div class="chat-message__main">
+        <div class="chat-message__main--username">
+            {{fullName | titlecase }} {{date | date:'shortTime'}}
+        </div>
+        <div class="chat-message__main--message" [class.isSender]="isSender">
+           <span>{{message}}</span> 
+        </div>
+    </div>
+</div>
