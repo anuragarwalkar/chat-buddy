@@ -10,7 +10,7 @@ import { Chat } from '../models/chat.model';
   providedIn: 'root'
 })
 export class ChatService {
-  private _recipientUuserDetails: User;
+  private RecipientUserDetails: User;
 
   constructor(private http: HttpClient) { }
 
@@ -29,11 +29,11 @@ export class ChatService {
   }
 
   setRecipientUserDetails(user: User): void {
-    this._recipientUuserDetails = user;
+    this.RecipientUserDetails = user;
   }
 
   get getRecipientUserDetails(): User {
-    return this._recipientUuserDetails;
+    return this.RecipientUserDetails;
   }
 
   getUserDetails(userId: string): Observable<User> {
