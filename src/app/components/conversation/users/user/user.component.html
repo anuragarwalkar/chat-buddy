@@ -5,6 +5,7 @@
         </div>
         <div class="user__container__user-info">
             {{user.fullName | titlecase}}
+            <span class="user__container__user-info--dot" *ngIf="user.isOnline"></span>
         </div>
     </div>
 </div>

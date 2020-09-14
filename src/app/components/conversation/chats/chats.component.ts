@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { SocketService } from 'src/app/services/socket/socket.service';
 import * as moment from 'moment';
 import { Chat } from 'src/app/models/chat.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chats',
   templateUrl: './chats.component.html',
   styleUrls: ['./chats.component.scss']
 })
-export class ChatsComponent implements OnInit {
+export class ChatsComponent implements OnInit, AfterViewChecked, OnDestroy {
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+
   message: string;
   chatHistory = [] as Chat[];
   showNewChat: boolean;
@@ -22,20 +25,23 @@ export class ChatsComponent implements OnInit {
     fullName: '',
     userId: ''
   };
+  messageSubscription: Subscription;
 
   constructor(public chat: ChatService,
               private socket: SocketService,
               private auth: AuthService,
               private route: ActivatedRoute,
               private router: Router
-              ) { }
+  ) { }
 
   onSubmit(): void {
     const { fullName } = this.auth.getUserDetails;
     const time = moment().format('h:m a');
 
-    this.chatHistory.push({ isSender: true, fullName, createdAt: new Date(),
-      message: this.message });
+    this.chatHistory.push({
+      isSender: true, fullName, createdAt: new Date(),
+      message: this.message
+    });
 
     this.socket.sendMessage(this.message, this.recipientId);
 
@@ -52,25 +58,48 @@ export class ChatsComponent implements OnInit {
       this.getChatHistory();
     });
 
-    this.socket.onNewMessage.subscribe((res: any) => {
-      const { message, username, time, recipientId } = res;
-      if (this.recipientId === recipientId) {
-        this.chatHistory.push({ isSender: false, fullName: username, createdAt: time, message });
-      }
-    });
+    this.newMessageSubscription();
 
     if (this.chat.getRecipientUserDetails) {
       this.recipientUserDetails = this.chat.getRecipientUserDetails;
     } else {
       try {
         if (!this.showNewChat) {
-        this.recipientUserDetails = await this.chat.getUserDetails(this.recipientId).toPromise();
+          this.recipientUserDetails = await this.chat.getUserDetails(this.recipientId).toPromise();
         }
       } catch (error) {
 
       }
     }
 
+    this.scrollToBottom();
+
+  }
+
+  private newMessageSubscription(): void {
+    this.messageSubscription = this.socket.onNewMessage.subscribe((res: any) => {
+      const { message, username, time, recipientId } = res;
+      if (this.recipientId === recipientId) {
+        this.chatHistory.push({ isSender: false, fullName: username,
+          createdAt: time, message });
+      }
+    });
+  }
+
+  ngAfterViewChecked(): void {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom(): void {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) { }
+  }
+
+  ngOnDestroy(): void {
+    if (this.messageSubscription !== undefined) {
+      this.messageSubscription.unsubscribe();
+    }
   }
 
   navigateToUsers(): void {
@@ -80,7 +109,7 @@ export class ChatsComponent implements OnInit {
   private getChatHistory(): void {
     if (!this.showNewChat) {
       this.chat.getChatHistory(this.auth.userDetails.userId, this.recipientId).subscribe(res => {
-          this.chatHistory = [...res];
+        this.chatHistory = [...res];
       });
     }
   }
