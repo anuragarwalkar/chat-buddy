@@ -3,5 +3,6 @@ export interface User {
     email: string;
     fullName: string;
     userId: string;
+    isOnline: string;
 }
 
