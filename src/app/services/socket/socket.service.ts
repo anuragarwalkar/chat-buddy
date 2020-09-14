@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import io from 'socket.io-client';
+import { User } from 'src/app/models/user.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -9,7 +10,9 @@ import { environment } from 'src/environments/environment';
 export class SocketService {
   private socket: io.Socket = null;
   userId: string;
-  onNewMessage = new Subject<string>();
+  newMessageSubscription = new Subject<string>();
+  connectedUserSubscription = new Subject<User>();
+  disconnectedUserSubscription = new Subject<User>();
 
   constructor() { }
 
@@ -21,8 +24,16 @@ export class SocketService {
     const options = { query: { token, userId } };
     this.socket = io(environment.origin, options);
 
-    this.socket.on('receiveMessage', msg => {
-      this.onNewMessage.next(msg);
+    this.socket.on('receiveMessage', (msg: any) => {
+      this.newMessageSubscription.next(msg);
+    });
+
+    this.socket.on('connectedUser', (res: User) => {
+      this.connectedUserSubscription.next(res);
+    });
+
+    this.socket.on('diconnectedUser', (res: User) => {
+      this.connectedUserSubscription.next(res);
     });
 
   }

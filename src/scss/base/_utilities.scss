@@ -1,0 +1,93 @@
+/* You can add global styles to this file, and also import other style files */
+html, body { height: 100%; background-color: #F4F5FB;}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; box-sizing: border-box;};
+
+
+// To add margin or padding to any element just use the below classes
+// Array of elements 
+$spaceamounts: (1,2,3,4,5,6,7,8,10);
+
+@each $space in $spaceamounts {
+    //Margin helper classes*****************************************
+    // Margin evenly
+    .m-#{$space} {
+        margin: #{$space}px !important;
+    }
+
+    // Margin top and bottom #{$space} and 0 for let and right
+    .my-#{$space} {
+        margin:  #{$space}px 0 !important;
+    }
+
+    // Margin top and bottom 0 and #{$space} for let and right
+    .mx-#{$space} {
+        margin:  0 #{$space}px !important;
+    }
+
+    // Margin top
+    .mt-#{$space} {
+        margin-top: #{$space}px !important;
+    }
+
+    // Margin bottom 
+    .mb-#{$space} {
+        margin-bottom: #{$space}px !important;
+    }
+
+    // Margin right
+    .mr-#{$space} {
+        margin-right: #{$space}px !important;
+    }
+
+    // Margin left
+    .ml-#{$space} {
+        margin-left: #{$space}px !important;
+    }
+
+    // **************************************************************
+
+    //Padding helper classes*****************************************
+    // Padding evenly
+    .p-#{$space} {
+        padding: #{$space}px !important;
+    }
+
+    // Padding top and bottom #{$space} and 0 for let and right
+    .py-#{$space} {
+        padding: #{$space}px 0 !important;
+    }
+
+    // Padding top and bottom 0 and #{$space} for let and right
+    .px-#{$space} {
+        padding:  #{$space}px 0 !important;
+    }
+
+    // Padding top
+    .pt-#{$space} {
+        padding-top: #{$space}px !important;
+    }
+
+    // Padding right
+    .pr-#{$space} {
+        padding-right: #{$space}px !important;
+    }
+
+    // Padding bottom
+    .pb-#{$space} {
+        padding-bottom: #{$space}px !important;
+    }
+
+    // Padding left
+    .pl-#{$space} {
+        padding-left: #{$space}px !important;
+    }
+    //***************************************************************
+}
+
+.absolute-center {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}

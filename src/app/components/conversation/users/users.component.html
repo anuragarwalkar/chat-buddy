@@ -1,5 +1,7 @@
 <div class="users">
-    <div *ngFor="let user of users" class="mt-5">
-        <app-user (click)="onUserClick(user.userId, user)" [user]="user"></app-user>
+    <div *ngFor="let user of users">
+        <div class="users__user">
+            <app-user (click)="onUserClick(user.userId, user)" [user]="user"></app-user>
+        </div>
     </div>
 </div>
