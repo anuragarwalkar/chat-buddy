@@ -9,7 +9,7 @@
         </div>
     </div>
     <ng-container *ngIf="!showNewChat; else empty">
-        <div class="chat__content" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+        <div class="chat__content" #scrollMe>
             <ng-container *ngIf="chatHistory.length > 0; else empty">
                 <div *ngFor="let message of chatHistory">
                     <app-chat-message [isSender]="message.isSender" [fullName]="message.fullName" [date]="message.createdAt"
