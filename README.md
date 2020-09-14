@@ -12,7 +12,7 @@ Hosted On Heroku `https://chat-buddy-node.herokuapp.com`
 
 Hosted On MongoCloud `mongodb+srv://anurag:<passowrd>@cluster0-mbclo.gcp.mongodb.net/chatBuddy?retryWrites=true&w=majority`
 
-# Continuous Intigration And Continuous Deployment (GitHub Pages & GitHub Actions)
+## Continuous Intigration And Continuous Deployment (GitHub Pages & GitHub Actions)
 Used GitHub Action to test and build the code before merging and pushing the code to the master branch and used angular cli gh pages to deploy UI changes. 
 
 ## Screenshots
