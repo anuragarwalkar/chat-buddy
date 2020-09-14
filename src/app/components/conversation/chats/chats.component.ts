@@ -28,10 +28,10 @@ export class ChatsComponent implements OnInit, AfterViewChecked, OnDestroy {
   messageSubscription: Subscription;
 
   constructor(public chat: ChatService,
-    private socket: SocketService,
-    private auth: AuthService,
-    private route: ActivatedRoute,
-    private router: Router
+              private socket: SocketService,
+              private auth: AuthService,
+              private route: ActivatedRoute,
+              private router: Router
   ) { }
 
   onSubmit(): void {
@@ -80,7 +80,7 @@ export class ChatsComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.messageSubscription = this.socket.onNewMessage.subscribe((res: any) => {
       const { message, username, time, recipientId } = res;
       if (this.recipientId === recipientId) {
-        this.chatHistory.push({ isSender: false, fullName: username, 
+        this.chatHistory.push({ isSender: false, fullName: username,
           createdAt: time, message });
       }
     });
