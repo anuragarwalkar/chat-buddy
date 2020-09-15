@@ -3,16 +3,24 @@
     height: 100%;
     flex-flow: column;
     justify-content: space-between;
-    padding: 10px 0 0 10px;
+    background-color: white;
+    border-radius: 5px;
 
     &__content {
+        padding: 10px 0 0 10px;
         height: 90%;
         overflow: auto;
     }
 
     &__navigation {
+        border-bottom: 5px solid #F4F5FB;
+
         &__mobile-nav {
             display: none;
+        }
+
+        &__desktop-nav {
+            width: 40%;
         }
     }
 
@@ -58,6 +66,10 @@
                     margin-left: 5px;
                 }
 
+            }
+
+            &__desktop-nav {
+                display: none;
             }
         }
 

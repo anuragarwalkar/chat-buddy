@@ -8,6 +8,7 @@ import { User } from 'src/app/models/user.model';
 })
 export class UserComponent implements OnInit {
   @Input() user: User;
+  @Input() hideIsOnline = false;
   constructor() { }
 
   ngOnInit(): void {

@@ -40,7 +40,7 @@ import { UserComponent } from './components/conversation/users/user/user.compone
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS,
     useClass: HttpInterceptorService,

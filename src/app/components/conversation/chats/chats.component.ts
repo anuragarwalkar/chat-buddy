@@ -56,6 +56,11 @@ export class ChatsComponent implements OnInit, AfterViewChecked, OnDestroy {
       this.showNewChat = id === 'new';
       this.recipientId = id;
       this.getChatHistory();
+
+      if (this.chat.getRecipientUserDetails) {
+        this.recipientUserDetails = this.chat.getRecipientUserDetails;
+      }
+
     });
 
     this.newMessageSubscription();
@@ -77,11 +82,13 @@ export class ChatsComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   private newMessageSubscription(): void {
-    this.messageSubscription = this.socket.onNewMessage.subscribe((res: any) => {
+    this.messageSubscription = this.socket.newMessageSubscription.subscribe((res: any) => {
       const { message, username, time, recipientId } = res;
       if (this.recipientId === recipientId) {
-        this.chatHistory.push({ isSender: false, fullName: username,
-          createdAt: time, message });
+        this.chatHistory.push({
+          isSender: false, fullName: username,
+          createdAt: time, message
+        });
       }
     });
   }
@@ -113,6 +120,4 @@ export class ChatsComponent implements OnInit, AfterViewChecked, OnDestroy {
       });
     }
   }
-
-
 }
