@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { AuthSignInModel, AuthSignUpModel } from '../models/auth.model';
 import jwt_decode from 'jwt-decode';
 import { SocketService } from './socket/socket.service';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +21,16 @@ export class AuthService {
   private mapCallback = (response: { success: boolean, data: any }): { success: boolean, data: any } => {
     const { success, data: { token, user } } = response;
     if (success) {
+      this.setUserDetailsAndNavigate(token, user);
+    }
+    return response;
+  }
+
+  setUserDetailsAndNavigate(token: string, user: User): void {
       this.setUserDetails(user);
       this.setAccessToken(token);
       this.socket.socketConnectionInit(token, user.userId);
       this.router.navigate(['/conversation/new/chat']);
-    }
-    return response;
   }
 
   signUp(body: AuthSignUpModel): Observable<{ success: boolean, data: AuthSignUpModel }> {
@@ -53,7 +58,8 @@ export class AuthService {
   get getUserDetails(): any {
     if (this.userDetails === null) {
       try {
-        this.userDetails = jwt_decode(this.getAccessToken).user;
+        const {user} = jwt_decode(this.getAccessToken);
+        this.userDetails = user;
         if (!this.socket.isSocketInit) {
           this.socket.socketConnectionInit(this.getAccessToken, this.userDetails.userId);
         }

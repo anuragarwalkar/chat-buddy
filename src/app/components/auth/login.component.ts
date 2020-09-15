@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment';
+import { ActivatedRoute } from '@angular/router';
+import jwt_decode from 'jwt-decode';
 
 const required = [Validators.required];
 
@@ -14,10 +16,13 @@ const required = [Validators.required];
 })
 export class LoginComponent implements OnInit {
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
-  constructor(private fb: FormBuilder, private auth: AuthService,
-              private snackBar: MatSnackBar) { }
+
+  constructor(private fb: FormBuilder,
+              private auth: AuthService,
+              private snackBar: MatSnackBar,
+              private route: ActivatedRoute) { }
   showLoader = false;
-  isSignUp = true;
+  isSignUp = false;
   form: FormGroup;
 
   submit(): void {
@@ -45,16 +50,39 @@ export class LoginComponent implements OnInit {
   }
 
   onSwitchScreen(form: NgForm): void {
-    this.form = this.fb.group({ email: ['', [...required, Validators.email]],
-    password: ['', [...required, Validators.minLength(8)]] });
+    this.form = this.fb.group({
+      email: ['', [...required, Validators.email]],
+      password: ['', [...required, Validators.minLength(8)]],
+      fullName: ['', [...required, Validators.minLength(6)]],
+      username: ['', [...required, Validators.minLength(5)]]
+    });
     this.formGroupDirective.resetForm();
-    this.isSignUp = false;
+    this.isSignUp = !this.isSignUp;
+  }
+
+  signInWithGoogle(): void {
+    window.open(`${environment.origin}/api/auth/google`, '_self');
   }
 
   ngOnInit(): void {
-    this.form = this.fb.group({ email: ['', [...required, Validators.email]],
-    password: ['', [...required, Validators.minLength(8)]],
-    fullName: ['', [...required, Validators.minLength(6)]],
-    username: ['', [...required, Validators.minLength(5)]] });
+    const { token = null } = this.route.snapshot.queryParams;
+    console.log('token:', token);
+    try {
+      if (token !== null) {
+        const { user } = jwt_decode(token);
+        if (user) {
+          this.auth.setUserDetailsAndNavigate(token, user);
+        }
+      }
+    } catch (error) {
+      this.snackBar.open(error.message, 'Error Occured', {
+        duration: 7000,
+      });
+    }
+
+    this.form = this.fb.group({
+      email: ['', [...required, Validators.email]],
+      password: ['', [...required, Validators.minLength(8)]]
+    });
   }
 }

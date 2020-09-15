@@ -1,7 +1,7 @@
 <div class="auth">
     <div class="auth__sign-up__container" *ngIf="!showLoader; else spinner">
         <mat-card>
-            <mat-card-title>{{ isSignUp ? "SIGN UP" : "SIGN IN" }}</mat-card-title>
+            <mat-card-title>{{ isSignUp ? "Sign Up To Chat Buddy" : "Sign In To Chat Buddy" }}</mat-card-title>
             <mat-card-content>
                 <form [formGroup]="form" (ngSubmit)="submit()">
                     <mat-form-field *ngIf="isSignUp">
@@ -9,7 +9,7 @@
                     </mat-form-field>
 
                     <mat-form-field>
-                        <input type="email" matInput placeholder="Email" formControlName="email">
+                        <input type="email" autocomplete="email" matInput placeholder="Email" formControlName="email">
                     </mat-form-field>
 
                     <mat-form-field *ngIf="isSignUp">
@@ -25,14 +25,18 @@
                     <div class="auth__sign-up__container__content--button">
                         <button type="submit" mat-raised-button>{{ isSignUp ? "Sign Up" : "Sign In" }}</button>
                     </div>
-
                 </form>
             </mat-card-content>
         </mat-card>
     </div>
-    <div class="auth__sign-in__container" *ngIf="isSignUp && !showLoader">
-        <p>Already Have Account?</p>
-        <button type="button" mat-raised-button color="primary" (click)="onSwitchScreen()">Sign In</button>
+
+    <div class="auth__google-sign-in__container" *ngIf="!showLoader" (click)="signInWithGoogle()">
+        <img src="assets/1x/btn_google_signin_dark_normal_web.png" alt="">
+    </div>
+    <div class="auth__sign-in__container" *ngIf="!showLoader">
+        <p (click)="onSwitchScreen()">
+            {{ !isSignUp ? "Don't have an account yet? Sign up here" : "Already Have Account? Sing in here"}}
+        </p>
     </div>
 
     <ng-template #spinner>

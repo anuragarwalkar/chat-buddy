@@ -8,18 +8,36 @@
     margin: auto;
 
     &__sign-up__container {
-        height: 22rem;
+        height: auto;
 
         &__content--button {
+            height: 3rem;
             display: flex;
+            align-items: center;
             justify-content: center;
         }
     }
 
     &__sign-in__container {
         display: flex;
-        flex-flow: column;
         align-items: center;
+        justify-content: center;
+        height: 4rem;
+
+        p {
+            font-size: 1rem;
+            color: #1B73E8;
+            cursor: pointer;
+        }
+    }
+
+    &__google-sign-in__container {
+        outline: none;
+        margin-top: 1.5rem;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        display: flex;
+        justify-content: center;
     }
 
     .mat-form-field {
@@ -30,5 +48,13 @@
     mat-card-content {
         display: flex;
         justify-content: center;
+    }
+
+    mat-card-title {
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3f51b5;
     }
 }
