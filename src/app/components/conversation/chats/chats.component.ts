@@ -113,6 +113,10 @@ export class ChatsComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.router.navigate(['conversation', 'users']);
   }
 
+  navigateToProfile(): void {
+    this.router.navigate(['conversation', this.recipientId, 'profile']);
+  }
+
   private getChatHistory(): void {
     if (!this.showNewChat) {
       this.chat.getChatHistory(this.auth.userDetails.userId, this.recipientId).subscribe(res => {

@@ -22,7 +22,7 @@ export class AuthGuardService implements CanActivate {
     }
 
     if (isAuth && response) {
-      this.router.navigate(['/conversation/new/chat']);
+      this.auth.navigateToChats();
     }
 
     return false;

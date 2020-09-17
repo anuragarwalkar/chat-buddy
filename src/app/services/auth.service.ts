@@ -21,7 +21,11 @@ export class AuthService {
   constructor(private http: HttpClient,
               private socket: SocketService,
               private router: Router,
-              private deviceService: DeviceDetectorService) { }
+              private deviceService: DeviceDetectorService
+              )
+              {
+                this.isMobile = this.deviceService.isMobile();
+              }
 
   private mapCallback = (response: { success: boolean, data: any }): { success: boolean, data: any } => {
     const { success, data: { token, user } } = response;
@@ -35,9 +39,12 @@ export class AuthService {
       this.setUserDetails(user);
       this.setAccessToken(token);
       this.socket.socketConnectionInit(token, user.userId);
-      this.isMobile = this.deviceService.isMobile();
-      const navigationRoute = this.isMobile ? 'users' : 'new/chat';
-      this.router.navigate([`/conversation/${navigationRoute}`]);
+      this.navigateToChats();
+  }
+
+  navigateToChats(): void {
+    const navigationRoute = this.isMobile ? 'users' : 'new/chat';
+    this.router.navigate([`/conversation/${navigationRoute}`]);
   }
 
   signUp(body: AuthSignUpModel): Observable<{ success: boolean, data: AuthSignUpModel }> {
