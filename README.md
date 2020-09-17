@@ -1,8 +1,8 @@
 # Chat Buddy
 
 ## Description
-Front End : Angular Version 10.1.1 <br>
-Back End : NodeJs with Typescript, Socket.io & MongoDb
+Front End : Angular Version 10.1.1 with Sign in with Google (Oauth2) <br>
+Back End : NodeJs with Typescript, Socket.io, passport.js, MongoDb
 
 ## API Link
 
