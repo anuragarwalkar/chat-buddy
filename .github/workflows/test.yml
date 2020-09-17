@@ -1,11 +1,11 @@
- name: Deploy to GitHub
+ name: Testing Angular
 
  on: 
   push:
     branches: [master]  
 
  jobs:
-   build-and-deploy:
+   testing:
      runs-on: ubuntu-latest
 
      steps:
