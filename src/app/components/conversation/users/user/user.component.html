@@ -1,7 +1,8 @@
 <div class="user">
     <div class="user__container">
         <div class="user__container__icon-container">
-            <mat-icon class="user__container__icon-container--icon">account_circle</mat-icon> 
+            <mat-icon *ngIf="user.picture === 'notProvided'; else picture" class="user__container__icon-container--icon">account_circle</mat-icon> 
+            <ng-template #picture><img [src]="user.picture" [alt]="user.fullName" referrerpolicy="no-referrer"></ng-template>
         </div>
         <div class="user__container__user-info">
             {{user.fullName | titlecase}}

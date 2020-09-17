@@ -8,6 +8,7 @@ import { AuthSignInModel, AuthSignUpModel } from '../models/auth.model';
 import jwt_decode from 'jwt-decode';
 import { SocketService } from './socket/socket.service';
 import { User } from '../models/user.model';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,12 @@ import { User } from '../models/user.model';
 
 export class AuthService {
   userDetails: { fullName: string; userId: string } = null;
+  isMobile: boolean;
 
-  constructor(private http: HttpClient, private socket: SocketService, private router: Router) { }
+  constructor(private http: HttpClient,
+              private socket: SocketService,
+              private router: Router,
+              private deviceService: DeviceDetectorService) { }
 
   private mapCallback = (response: { success: boolean, data: any }): { success: boolean, data: any } => {
     const { success, data: { token, user } } = response;
@@ -30,7 +35,9 @@ export class AuthService {
       this.setUserDetails(user);
       this.setAccessToken(token);
       this.socket.socketConnectionInit(token, user.userId);
-      this.router.navigate(['/conversation/new/chat']);
+      this.isMobile = this.deviceService.isMobile();
+      const navigationRoute = this.isMobile ? 'users' : 'new/chat';
+      this.router.navigate([`/conversation/${navigationRoute}`]);
   }
 
   signUp(body: AuthSignUpModel): Observable<{ success: boolean, data: AuthSignUpModel }> {

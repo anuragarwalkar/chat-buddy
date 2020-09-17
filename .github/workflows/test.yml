@@ -1,13 +1,11 @@
- name: Deploy to GitHub
+ name: Testing & Linting Angular
 
  on: 
-  push:
-    branches: [master]
   pull_request:
-    branches: [master]    
+    branches: [master]  
 
  jobs:
-   build-and-deploy:
+   Testing-Linting:
      runs-on: ubuntu-latest
 
      steps:
@@ -28,4 +26,3 @@
          # npm test -- --watch=false --progress=false --browsers=ChromeHeadlessCI
          # npm run webdriver-update-ci
          # npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js --webdriver-update=false
-         npm run ng deploy --no-silent

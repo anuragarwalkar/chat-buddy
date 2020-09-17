@@ -61,12 +61,12 @@ export class LoginComponent implements OnInit {
   }
 
   signInWithGoogle(): void {
+    this.showLoader = !this.showLoader;
     window.open(`${environment.origin}/api/auth/google`, '_self');
   }
 
   ngOnInit(): void {
     const { token = null } = this.route.snapshot.queryParams;
-    console.log('token:', token);
     try {
       if (token !== null) {
         const { user } = jwt_decode(token);
