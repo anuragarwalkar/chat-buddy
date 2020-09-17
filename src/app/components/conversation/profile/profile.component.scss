@@ -1,0 +1,68 @@
+.profile {
+    margin: auto;
+    display: flex;
+    flex-flow: column;
+    height: 80%;
+    padding: 2rem;
+    justify-content: center;
+
+    &__icon {
+        img {
+            width: 200px;
+            height: auto;
+            border-radius: 50%;
+        }
+        mat-icon {
+            font-size: 7rem;
+        }
+        display: flex;
+        justify-content: center;
+    }
+
+    &__full-name {
+        text-align: center;
+        h1 {
+            margin: 16px 0;
+        }
+    }
+
+    &__cards {
+        height: 20%;
+        display: flex;
+        flex-flow: column;
+        justify-content: space-evenly;
+
+        &__card {
+            background-color: white;
+            padding: 8px;
+            display: grid;
+            border-radius: 5px;
+            grid-template-columns: 50px 1fr;
+            box-shadow: 5px 10px 8px -7px #ccc;
+
+            span {
+                line-height: 24px;
+            }
+        }
+    }
+
+    mat-icon {
+        color: #44cdff;
+    }
+
+    .mat-icon {
+        height: auto;
+        width: auto;
+    }
+}
+
+
+@media screen and (min-width: 800px) {
+    .profile {
+        align-items: center;
+
+        &__cards {
+           width: 60%;
+        }
+    }
+}
