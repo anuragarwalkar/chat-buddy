@@ -1,11 +1,11 @@
 <div class="chat">
     <div class="chat__navigation">
-        <div class="chat__navigation__mobile-nav" (click)="navigateToUsers()">
-            <mat-icon>west</mat-icon>
+        <div class="chat__navigation__mobile-nav">
+            <mat-icon (click)="navigateToUsers()">west</mat-icon>
             <div *ngIf="showNewChat; else userInfo" class="chat__navigation__mobile-nav--text">Go Back To All users</div>
         </div>
         <div class="chat__navigation__desktop-nav" *ngIf="!showNewChat">
-            <app-user [user]="recipientUserDetails" [hideIsOnline]="true"></app-user>
+            <app-user (click)="navigateToProfile()" [user]="recipientUserDetails" [hideIsOnline]="true"></app-user>
         </div>
     </div>
     <ng-container *ngIf="!showNewChat; else empty">
@@ -43,5 +43,5 @@
 </ng-template>
 
 <ng-template #userInfo>
-    <app-user style="width: 80%;" [user]="recipientUserDetails"></app-user>
+    <app-user (click)="navigateToProfile()" style="width: 80%;" [user]="recipientUserDetails"></app-user>
 </ng-template>
