@@ -13,7 +13,8 @@ Front End : Angular Version 10.1.1 with Sign in with Google (Oauth2) <br>
 Back End : NodeJs with Typescript, Socket.io, passport.js, MongoDb
 
 ## API Link
-
+[Chat Buddy Backend](https://github.com/anuragarwalkar/chat-buddy-backend) (Node.js)
+<br/>
 Hosted On Heroku `https://chat-buddy-node.herokuapp.com`
 
 ## Databse Link
